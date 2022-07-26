@@ -18,7 +18,7 @@ module.exports = (sequelize, dataTypes) => {
     timestamps: false,
   };
 
-  const Movies_genres = sequelize.define(alias, cols, config);
+  const Movies_genres = sequelize.define( cols, config);
 
   Movies_genres.associate = function (models) {};
 

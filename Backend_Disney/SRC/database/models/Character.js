@@ -28,12 +28,12 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,
     };
   
-    const Character = sequelize.define(alias, cols, config);
+    const Character = sequelize.define( cols, config);
   
-    Character.associate = function (models) {
+    // Character.associate = function (models) {
   
      
-        };
+    //     };
   
     return Character;
   };

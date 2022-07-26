@@ -19,7 +19,7 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,
     };
   
-    const Movies_characters = sequelize.define(alias, cols, config);
+    const Movies_characters = sequelize.define( cols, config);
   
     Movies_characters.associate = function (models) {};
   

@@ -20,7 +20,7 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,
     };
   
-    const Genres = sequelize.define(alias, cols, config);
+    const Genres = sequelize.define( cols, config);
   
     Genres.associate = function (models) {
   

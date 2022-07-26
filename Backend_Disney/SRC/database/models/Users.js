@@ -24,7 +24,7 @@ module.exports = (sequelize, dataTypes) => {
     deletedAt: false,
   };
 
-  const Users = sequelize.define(alias, cols, config);
+  const Users = sequelize.define( cols, config);
 
   Users.associate = function (models) {};
 
