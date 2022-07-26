@@ -1,7 +1,7 @@
 module.exports = (sequelize, dataTypes) => {
     
     let cols = {
-      idCharacter: {
+      idMovie: {
         type: dataTypes.BIGINT(10),
         primaryKey: true,
         autoIncrement: true,
@@ -9,32 +9,29 @@ module.exports = (sequelize, dataTypes) => {
       image: {
         type: dataTypes.STRING(200),
       },
-      name: {
+      title: {
         type: dataTypes.STRING(45),
         allowNull: false,
         unique:true
       },
-      age: {
-        type: dataTypes.BIGINT(10),
+      relaseDate: {
+        type: dataTypes.DATE,
       },
-      weight: {
+      rating: {
         type: dataTypes.BIGINT(10),
-      },
-      history: {
-        type: dataTypes.STRING(200),
       },
     };
     let config = {
       timestamps: false,
     };
   
-    const Character = sequelize.define(alias, cols, config);
+    const Movies = sequelize.define(alias, cols, config);
   
-    Character.associate = function (models) {
+    Movies.associate = function (models) {
   
      
         };
   
-    return Character;
+    return Movies;
   };
   
