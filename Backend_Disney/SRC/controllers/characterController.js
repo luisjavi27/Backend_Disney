@@ -2,10 +2,10 @@
 const characterService = require("../services/characterService")
 
 const characterController ={
-     getAllCharacters : (req, res) => {
+     getAllCharacters : async (req, res) => {
 
-        let allCharacters = characterService.getAllCharacters;
-        res.send("get ALL characters ");
+        let allCharacters = await characterService.getAllCharacters();
+        res.json(allCharacters);
     },
     
      getOneCharacter : (req, res) => {

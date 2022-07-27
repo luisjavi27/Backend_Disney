@@ -20,8 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use(express.urlencoded({ extended: false })); // body-parser middleware
+app.use(express.urlencoded({ extended: false })); 
+app.use(express.json());// body-parser middleware
 
 app.use('/api/characters/', characterRoutes);
 app.use('/api/', userRoutes); 

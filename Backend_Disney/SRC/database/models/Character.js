@@ -28,7 +28,7 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,
     };
   
-    const Character = sequelize.define( cols, config);
+    const Character = sequelize.define( "Character", cols, config);
   
     // Character.associate = function (models) {
   

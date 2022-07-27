@@ -1,28 +1,34 @@
 const db = require("../database/models")
 
 const characterService ={
-    getAllCharacters : async (req, res) => {
-    console.log(await db.getAllCharacters)
-    res.send("get all ok")
+    getAllCharacters : async () => {
+        try{
+            let allCharacters= await db.Character.findAll();
+
+            return allCharacters    
+        }catch(err){
+            console.log(err)
+        }
+
    },
    
-    getOneCharacter : (req, res) => {
+    getOneCharacter : () => {
       
     },
    
-    addCharacter :(req, res) => {
+    addCharacter :() => {
       
     },
    
-    editCharacter :(req, res) => {
+    editCharacter :() => {
        
     },
    
-    deleteCharacter :(req, res) => {
+    deleteCharacter :() => {
      
     },
    
-    searchCharacters :(req, res) => {
+    searchCharacters :() => {
        
     }
 }
