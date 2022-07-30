@@ -1,5 +1,7 @@
 module.exports = (sequelize, dataTypes) => {
+  let alias = "User";
   let cols = {
+    
     idUser: {
       type: dataTypes.BIGINT(10),
       primaryKey: true,
@@ -24,7 +26,7 @@ module.exports = (sequelize, dataTypes) => {
     deletedAt: false,
   };
 
-  const User = sequelize.define( "User", cols, config);
+  const User = sequelize.define( alias, cols, config);
 
   User.associate = function (models) {};
 

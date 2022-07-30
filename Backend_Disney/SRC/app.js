@@ -6,11 +6,12 @@ var logger = require('morgan');
 
 var characterRoutes = require('./routes/characterRoutes');
 var userRoutes = require('./routes/userRoutes');
+var movieRoutes = require('./routes/movieRoutes');
 
 
 var app = express();
 
-// not engine setup, onli backend
+// not engine setup, only backend
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -20,10 +21,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.urlencoded({ extended: false })); 
-app.use(express.json());// body-parser middleware
+
+
+// app.use((_, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//   res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+//   next();
+// });
 
 app.use('/api/characters/', characterRoutes);
+app.use('/api/movies/', movieRoutes);
 app.use('/api/', userRoutes); 
 
 

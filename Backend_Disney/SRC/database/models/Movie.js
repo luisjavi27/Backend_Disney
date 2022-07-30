@@ -1,4 +1,5 @@
 module.exports = (sequelize, dataTypes) => {
+  let alias = "Movie";
     
     let cols = {
       idMovie: {
@@ -25,7 +26,7 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,
     };
   
-    const Movies = sequelize.define( "Movies", cols, config);
+    const Movies = sequelize.define( alias, cols, config);
   
     Movies.associate = function (models) {
   

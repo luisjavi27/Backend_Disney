@@ -1,5 +1,5 @@
 module.exports = (sequelize, dataTypes) => {
-    
+  let alias = "Character";
     let cols = {
       idCharacter: {
         type: dataTypes.BIGINT(10),
@@ -28,12 +28,12 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,
     };
   
-    const Character = sequelize.define( "Character", cols, config);
+    const Character = sequelize.define( alias, cols, config);
   
-    // Character.associate = function (models) {
+    Character.associate = function (models) {
   
      
-    //     };
+        };
   
     return Character;
   };

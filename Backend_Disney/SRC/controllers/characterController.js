@@ -1,45 +1,74 @@
+const characterService = require("../services/characterService");
 
-const characterService = require("../services/characterService")
+const characterController = {
+  getAllCharacters: async (req, res) => {
+    let allCharacters = await characterService.getAllCharacters();
+    if (allCharacters.error) {
+      res.status(500);
+      res.send(allCharacters);
+    } else {
+      res.status(200);
+      res.send(allCharacters);
+    }
+  },
 
-const characterController ={
-     getAllCharacters : async (req, res) => {
+  getOneCharacter: async (req, res) => {
+    let character = await characterService.getOneCharacter(req.params.id);
 
-        let allCharacters = await characterService.getAllCharacters();
-        res.json(allCharacters);
-    },
-    
-     getOneCharacter : (req, res) => {
+    if (character.error) {
+      res.status(character.error.code);
+      res.send({ response: character.error.data });
+    } else {
+      res.status(200);
+      res.send(character);
+    }
+  },
 
-        let character = characterService.getOneCharacter;
-        res.send(`get ONE character ${JSON.stringify(req.params)}`);
-     },
-    
-     addCharacter :(req, res) => {
+  createCharacter: async (req, res) => {
+    let newCharacter = await characterService.createCharacter(req.body);
 
-        let newCharacter = characterService.addCharacter;
-        res.send(`add character`);
-     },
-    
-     editCharacter :(req, res) => {
+    if (newCharacter.error) {
+      res.status(newCharacter.error.code);
+      res.send({ response: newCharacter.error.data });
+    } else {
+      res.status(201);
+      res.send(newCharacter);
+    }
+  },
 
-        let editCharacter = characterService.editCharacter;
-        res.send(`edit character ${JSON.stringify(req.params)}`);
-     },
-    
-     deleteCharacter :(req, res) => {
+  editCharacter: async (req, res) => {
+    let { ...data } = req.body;
 
-        let deleteCharacter = characterService.deleteCharacter;
-        res.send(`delete character "Param: ${JSON.stringify(req.params)}"`);
-     },
-    
-     searchCharacters :(req, res) => {
+    let characterEdit = await characterService.editCharacter({
+      id: req.params.id,
+      data: data,
+    });
 
-        let searchCharacters = characterService.searchCharacters;
-        res.send(`search character "Query String: ${JSON.stringify(req.query)}"`);
-     }
-}
+    if (characterEdit.error) {
+      res.status(characterEdit.error.code);
+      res.send({ response: characterEdit.error.data });
+    } else {
+      res.status(200);
+      res.send(characterEdit);
+    }
+  },
 
+  deleteCharacter: async (req, res) => {
+    let deleteCharacter = await characterService.deleteCharacter(req.params.id);
 
+    if (deleteCharacter.error) {
+      res.status(deleteCharacter.error.code);
+      res.send({ response: deleteCharacter.error.data });
+    } else {
+      res.status(200);
+      res.send(deleteCharacter);
+    }
+  },
 
-module.exports = characterController
+  searchCharacters: (req, res) => {
+    let searchCharacters = characterService.searchCharacters();
+    res.send(`search character "Query String: ${JSON.stringify(req.query)}"`);
+  },
+};
 
+module.exports = characterController;

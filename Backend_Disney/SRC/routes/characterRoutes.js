@@ -7,12 +7,12 @@ router.get('/', characterController.getAllCharacters);
 
 router.get('/:id', characterController.getOneCharacter);
 
-router.post('/add', characterController.addCharacter);
+router.post('/create', characterController.createCharacter);
 
-router.patch('/edit/:id', characterController.editCharacter);
+router.put('/edit/:id', characterController.editCharacter);
 
 router.delete('/delete/:id', characterController.deleteCharacter);
 
-router.get('/characters', characterController.searchCharacters);
+// router.get('/characters', characterController.searchCharacters);
 
 module.exports = router;
