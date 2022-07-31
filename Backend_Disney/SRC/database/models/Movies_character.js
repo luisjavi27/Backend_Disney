@@ -1,4 +1,5 @@
 module.exports = (sequelize, dataTypes) => {
+  let alias = "Movies_character";
     let cols = {
         idMovies_characters: {
         type: dataTypes.BIGINT(10),
@@ -19,10 +20,22 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,
     };
   
-    const Movies_characters = sequelize.define("Movies_characters", cols, config);
+    const Movies_character = sequelize.define(alias, cols, config);
   
-    Movies_characters.associate = function (models) {};
+    Movies_character.associate = function (models) {
+
+      Movies_character.belongsTo(models.Movie, {
+        as: "Movies_character_Movies", // nombre de la relacion
+        foreignKey: "idMovieFK", // nombre de la FK
+      });
   
-    return Movies_characters;
+  
+      Movies_character.belongsTo(models.Character, {
+        as: "Movies_character__characters", // nombre de la relacion
+        foreignKey: "idCharacterFK", // nombre de la FK
+      });
+    };
+  
+    return Movies_character;
   };
   

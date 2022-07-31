@@ -25,7 +25,16 @@ const characterController = {
   },
 
   createCharacter: async (req, res) => {
-    let newCharacter = await characterService.createCharacter(req.body);
+
+    let {in_movies, ...dataNewCharacter} = req.body;
+    in_movies = in_movies.split(",")
+
+    dataNewCharacter.in_movies=[];
+    in_movies.forEach((movie)=>{
+      dataNewCharacter.in_movies.push({idMovieFK:movie})
+    });
+    
+    let newCharacter = await characterService.createCharacter(dataNewCharacter);
 
     if (newCharacter.error) {
       res.status(newCharacter.error.code);

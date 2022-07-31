@@ -26,13 +26,25 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,
     };
   
-    const Movies = sequelize.define( alias, cols, config);
+    const Movie = sequelize.define( alias, cols, config);
   
-    Movies.associate = function (models) {
+    Movie.associate = function (models) {
+      Movie.belongsToMany(models.Character, {
+        as: "Movie_Character",
+        through:"Movies_character",
+        foreignKey: "idMovieFK",
+        otherKey:"idCharacterFK",
+        timestamps: false,  
+      });
+
+      Movie.hasMany(models.Movies_character, {
+        as: "characters_in",
+        foreignKey: "idMovieFK",
+        timestamps: false,
+      });
   
-     
         };
   
-    return Movies;
+    return Movie;
   };
   

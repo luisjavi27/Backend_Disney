@@ -1,12 +1,20 @@
 const db = require("../database/models");
 const sequelize = require("sequelize");
+const { DatabaseError } = require("sequelize");
 
 const characterService = {
   getAllCharacters: async () => {
     try {
       let allCharacters = await db.Character.findAndCountAll({
         attributes: [["idCharacter", "id"], "name", "image"],
+        include: {
+          model: db.Movie,
+          as: "Character_Movies",
+          attributes: ["idMovie","title"],
+        },
+        // raw: true
       });
+
       return { data: allCharacters.rows, count: allCharacters.count };
     } catch (err) {
       return { error: { code: 500, data: err.toString() } };
@@ -15,9 +23,16 @@ const characterService = {
 
   getOneCharacter: async (id) => {
     try {
-      let character = await db.Character.findByPk(id);
+      let character = await db.Character.findByPk(id, {
+        include: {
+          model: db.Movie,
+          as: "Character_Movies",
+          attributes: ["idMovie","title"]},
+    
+      });
 
       if (character === null) {
+        º;
         return { error: { code: 204 } };
       } else {
         return { data: character };
@@ -31,6 +46,7 @@ const characterService = {
     try {
       let newCharacter = await db.Character.create(dataNewCharacter, {
         fields: ["image", "name", "age", "weight", "history"],
+        include: { model: db.Movies_character, as: "in_movies" },
       });
 
       if (newCharacter === null) {
@@ -63,11 +79,11 @@ const characterService = {
     try {
       let deleteCharacter = await db.Character.destroy({
         where: { idCharacter: id },
-    });
-    
-    if (deleteCharacter === null) {
+      });
+
+      if (deleteCharacter === null) {
         return { error: { code: 500, data: deleteCharacter } };
-    } else {
+      } else {
         return { "Affected rows": deleteCharacter };
       }
     } catch (err) {

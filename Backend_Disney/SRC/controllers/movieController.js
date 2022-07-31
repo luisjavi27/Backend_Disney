@@ -25,7 +25,8 @@ const movieController = {
   },
 
   createMovie: async (req, res) => {
-    let newMovie = await movieService.createMovie(req.body);
+
+    let newMovie = await movieService.createMovie();
 
     if (newMovie.error) {
       res.status(newMovie.error.code);
