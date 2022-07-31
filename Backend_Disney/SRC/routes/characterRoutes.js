@@ -13,6 +13,5 @@ router.put('/edit/:id', characterController.editCharacter);
 
 router.delete('/delete/:id', characterController.deleteCharacter);
 
-// router.get('/characters', characterController.searchCharacters);
 
 module.exports = router;

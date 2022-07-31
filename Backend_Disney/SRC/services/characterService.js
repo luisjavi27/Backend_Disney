@@ -1,19 +1,30 @@
 const db = require("../database/models");
+const { Op } = require("sequelize");
 const sequelize = require("sequelize");
-const { DatabaseError } = require("sequelize");
 
 const characterService = {
-  getAllCharacters: async () => {
+  getAllCharacters: async (searchData) => {
     try {
-      let allCharacters = await db.Character.findAndCountAll({
-        attributes: [["idCharacter", "id"], "name", "image"],
-        include: {
-          model: db.Movie,
-          as: "Character_Movies",
-          attributes: ["idMovie","title"],
-        },
-        // raw: true
-      });
+      let allCharacters = undefined;
+      if (searchData.movies) {
+        allCharacters = await db.Character.findAndCountAll({
+          include: {
+            model: db.Movie,
+            as: "Character_Movies",
+            attributes: ["idMovie", "title"],
+            where: { idMovie: searchData.movies },
+          },
+        });
+      } else {
+        allCharacters = await db.Character.findAndCountAll({
+          include: {
+            model: db.Movie,
+            as: "Character_Movies",
+            attributes: ["idMovie", "title"],
+          },
+          where: searchData,
+        });
+      }
 
       return { data: allCharacters.rows, count: allCharacters.count };
     } catch (err) {
@@ -24,15 +35,22 @@ const characterService = {
   getOneCharacter: async (id) => {
     try {
       let character = await db.Character.findByPk(id, {
+        attributes: [
+          ["idCharacter", "id"],
+          "name",
+          "image",
+          "age",
+          "history",
+          "weight",
+        ],
         include: {
           model: db.Movie,
           as: "Character_Movies",
-          attributes: ["idMovie","title"]},
-    
+          attributes: ["idMovie", "title"],
+        },
       });
 
       if (character === null) {
-        º;
         return { error: { code: 204 } };
       } else {
         return { data: character };
@@ -91,7 +109,6 @@ const characterService = {
     }
   },
 
-  searchCharacters: () => {},
 };
 
 module.exports = characterService;

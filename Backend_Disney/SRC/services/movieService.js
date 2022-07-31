@@ -2,9 +2,12 @@ const db = require("../database/models");
 const sequelize = require("sequelize");
 
 const movieService = {
-  getAllMovies: async () => {
+  getAllMovies: async (searchData) => {
     try {
-      let allMovies = await db.Movie.findAndCountAll({
+      console.log(searchData);
+      let allMovies = undefined;
+      if (searchData.order) {
+       allMovies = await db.Movie.findAndCountAll({
         attributes: [["idMovie", "id"], "title", "relaseDate", "rating", "image"],
         include: 
         [
@@ -18,8 +21,37 @@ const movieService = {
             as: "Movie_Genre",
             attributes: ["idGenre", "name"],
           },
-        ]
+         
+        ],
+        order: [["relaseDate", searchData.order] ],
       });
+    }else if (searchData.genre||searchData.name){
+      allMovies = await db.Movie.findAndCountAll({
+        attributes: [["idMovie", "id"], "title", "relaseDate", "rating", "image"],
+        include: 
+        [
+          {
+            model: db.Character,
+            as: "Movie_Character",
+            attributes: ["idCharacter", "name"],
+          },
+          {
+            model: db.Genre,
+            as: "Movie_Genre",
+            attributes: ["idGenre", "name"],
+            where:{
+              [sequelize.Op.or]: 
+              [ 
+                {idGenre:[searchData.genre||0]},
+                {name:[searchData.name||""]},
+              ]
+            }
+
+          },
+         
+        ],
+      });
+    }
       return { data: allMovies.rows, count: allMovies.count };
     } catch (err) {
       return { error: { code: 500, data: err.toString() } };

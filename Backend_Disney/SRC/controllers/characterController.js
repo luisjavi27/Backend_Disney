@@ -2,7 +2,7 @@ const characterService = require("../services/characterService");
 
 const characterController = {
   getAllCharacters: async (req, res) => {
-    let allCharacters = await characterService.getAllCharacters();
+    let allCharacters = await characterService.getAllCharacters(req.query);
     if (allCharacters.error) {
       res.status(500);
       res.send(allCharacters);
@@ -14,7 +14,7 @@ const characterController = {
 
   getOneCharacter: async (req, res) => {
     let character = await characterService.getOneCharacter(req.params.id);
-
+console.log("aqui noS")
     if (character.error) {
       res.status(character.error.code);
       res.send({ response: character.error.data });
@@ -74,10 +74,6 @@ const characterController = {
     }
   },
 
-  searchCharacters: (req, res) => {
-    let searchCharacters = characterService.searchCharacters();
-    res.send(`search character "Query String: ${JSON.stringify(req.query)}"`);
-  },
 };
 
 module.exports = characterController;

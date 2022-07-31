@@ -2,7 +2,7 @@ const movieService = require("../services/movieService");
 
 const movieController = {
   getAllMovies: async (req, res) => {
-    let allmovies = await movieService.getAllMovies();
+    let allmovies = await movieService.getAllMovies(req.query);
     if (allmovies.error) {
       res.status(500);
       res.send(allmovies);
