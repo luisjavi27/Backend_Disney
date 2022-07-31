@@ -7,6 +7,7 @@ var logger = require('morgan');
 var characterRoutes = require('./routes/characterRoutes');
 var userRoutes = require('./routes/userRoutes');
 var movieRoutes = require('./routes/movieRoutes');
+var genreRoutes = require('./routes/genreRoutes');
 
 
 var app = express();
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   next();
 // });
 
+app.use('/api/genres/', genreRoutes);
 app.use('/api/characters/', characterRoutes);
 app.use('/api/movies/', movieRoutes);
 app.use('/api/', userRoutes); 

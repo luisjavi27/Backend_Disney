@@ -37,13 +37,27 @@ module.exports = (sequelize, dataTypes) => {
         timestamps: false,  
       });
 
+      Movie.belongsToMany(models.Genre, {
+        as: "Movie_Genre",
+        through:"Movies_genre",
+        foreignKey: "idMovieFK",
+        otherKey:"idGenreFK",
+        timestamps: false,  
+      });
+
       Movie.hasMany(models.Movies_character, {
         as: "characters_in",
         foreignKey: "idMovieFK",
         timestamps: false,
       });
-  
-        };
+
+      Movie.hasMany(models.Movies_genre, {
+        as: "genres_of",
+        foreignKey: "idGenreFK",
+        timestamps: false,
+      });
+    };
+
   
     return Movie;
   };

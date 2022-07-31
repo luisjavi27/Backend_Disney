@@ -6,11 +6,19 @@ const movieService = {
     try {
       let allMovies = await db.Movie.findAndCountAll({
         attributes: [["idMovie", "id"], "title", "relaseDate", "rating", "image"],
-        include: {
-          model: db.Character,
-          as: "Movie_Character",
-          attributes: ["idCharacter", "name"],
-        },
+        include: 
+        [
+          {
+            model: db.Character,
+            as: "Movie_Character",
+            attributes: ["idCharacter", "name"],
+          },
+          {
+            model: db.Genre,
+            as: "Movie_Genre",
+            attributes: ["idGenre", "name"],
+          },
+        ]
       });
       return { data: allMovies.rows, count: allMovies.count };
     } catch (err) {
@@ -21,9 +29,19 @@ const movieService = {
   getOneMovie: async (id) => {
     try {
       let movie = await db.Movie.findByPk(id, {
-        include: {model: db.Character,
-          as: "Movie_Character",
-          attributes: ["idCharacter", "name"],},
+        include: 
+        [
+          {
+            model: db.Character,
+            as: "Movie_Character",
+            attributes: ["idCharacter", "name"],
+          },
+          {
+            model: db.Genre,
+            as: "Movie_Genre",
+            attributes: ["idGenre", "name"],
+          },
+        ]
       });
 
       if (movie === null) {
@@ -42,6 +60,7 @@ const movieService = {
     try {
       let newMovie = await db.Movie.create(dataNewMovie, {
         fields: ["image", "title", "relaseDate", "rating"],
+        include: { model: db.Genre, as: "characters_in" },
       });
 
 

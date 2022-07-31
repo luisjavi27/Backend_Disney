@@ -25,14 +25,14 @@ module.exports = (sequelize, dataTypes) => {
     Movies_character.associate = function (models) {
 
       Movies_character.belongsTo(models.Movie, {
-        as: "Movies_character_Movies", // nombre de la relacion
-        foreignKey: "idMovieFK", // nombre de la FK
+        as: "Movies_character_Movies", 
+        foreignKey: "idMovieFK", 
       });
   
   
       Movies_character.belongsTo(models.Character, {
-        as: "Movies_character__characters", // nombre de la relacion
-        foreignKey: "idCharacterFK", // nombre de la FK
+        as: "Movies_character__characters", 
+        foreignKey: "idCharacterFK", 
       });
     };
   
