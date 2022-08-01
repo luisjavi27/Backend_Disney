@@ -62,6 +62,7 @@ const characterService = {
 
   createCharacter: async (dataNewCharacter) => {
     try {
+      console.log(dataNewCharacter)
       let newCharacter = await db.Character.create(dataNewCharacter, {
         fields: ["image", "name", "age", "weight", "history"],
         include: { model: db.Movies_character, as: "in_movies" },

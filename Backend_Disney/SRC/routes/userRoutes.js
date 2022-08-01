@@ -3,7 +3,8 @@ const router = express.Router();
 const userController = require("../controllers/userController")
 let authMiddleware = require('../middlewares/authMiddleware.js')
 
-router.get('/', authMiddleware, userController.getOneUser);
+
+router.get('/:email', authMiddleware, userController.getOneUser);
 
 router.get('/login', userController.loginUser);
 

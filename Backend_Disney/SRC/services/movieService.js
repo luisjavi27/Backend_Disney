@@ -88,11 +88,11 @@ const movieService = {
 
   createMovie: async (dataNewMovie) => {
  
-
+console.log(dataNewMovie)
     try {
       let newMovie = await db.Movie.create(dataNewMovie, {
-        fields: ["image", "title", "relaseDate", "rating"],
-        include: { model: db.Genre, as: "characters_in" },
+        fields: ["image", "title", "relaseDate", "rating", ],
+        include: { model: db.Movies_genre, as: "genres_of" },
       });
 
 

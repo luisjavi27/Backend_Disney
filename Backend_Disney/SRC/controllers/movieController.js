@@ -26,14 +26,18 @@ const movieController = {
 
   createMovie: async (req, res) => {
 
-    let {...dataNewMovie} = req.body;
-    // let {of_movie, ...dataNewMovie} = req.body;
-    // of_movie = of_movie.split(",")
+    let {genres_of, ...dataNewMovie} = req.body;
+    if(genres_of === undefined){
+      res.status(400);
+      return res.send({ data: "Assign at least one genre" });
+      
+    }
+    genres_of = genres_of.split(",")
 
-    // dataNewMovie.of_movie=[];
-    // of_movie.forEach((movie)=>{
-    //   dataNewMovie.of_movie.push({idMovieFK:movie})
-    // });
+    dataNewMovie.genres_of=[];
+    genres_of.forEach((genre)=>{
+      dataNewMovie.genres_of.push({idGenreFK:genre})
+    });
 
     let newMovie = await movieService.createMovie(dataNewMovie);
 

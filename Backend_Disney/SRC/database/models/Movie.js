@@ -53,7 +53,7 @@ module.exports = (sequelize, dataTypes) => {
 
       Movie.hasMany(models.Movies_genre, {
         as: "genres_of",
-        foreignKey: "idGenreFK",
+        foreignKey: "idMovieFK",
         timestamps: false,
       });
     };

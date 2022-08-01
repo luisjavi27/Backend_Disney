@@ -1,40 +1,29 @@
 const db = require("../database/models");
 const sequelize = require("sequelize");
 const bcryptjs = require("bcryptjs");
-// const dotenv = require('dotenv');
+const { sendMail } = require('../email/account')
+
 const jwt = require('jsonwebtoken');
 
 const userService = {
-  getAllUsers: async () => {
-    try {
-      let allUsers = await db.User.findAndCountAll({
-        attributes: [["idUser", "id"], "name", "image"],
-        include: {
-          model: db.Movie,
-          as: "Users_Movie",
-          attributes: ["idMovie", "title"],
-        },
-      });
-      return { data: allUsers.rows, count: allUsers.count };
-    } catch (err) {
-      return { error: { code: 500, data: err.toString() } };
-    }
-  },
+
 
   getOneUser: async (userData) => {
     try {
       let user = await db.User.findOne({
         where: {
-          [sequelize.Op.or]: [
-            { userName: [userData.user || ""] },
-            { email: [userData.email || ""] },
-          ],
+             email: [userData || ""] ,
         },
+        attributes: [
+          ["idUser", "id"],
+          ["userName", "user"],
+          "email"
+        ],
         raw: true,
       });
 
       if (user === null) {
-        return { error: { code: 500, data: err.toString() } };
+        return { data: "Email not found " };
       } else {
         return { data: user };
       }
@@ -46,7 +35,7 @@ const userService = {
   createUser: async (dataNewUser) => {
     try {
       let newUser = await db.User.create({
-        userName: dataNewUser.name,
+        userName: dataNewUser.user,
         email: dataNewUser.email,
         password: bcryptjs.hashSync(dataNewUser.password, 10),
       });
@@ -54,6 +43,11 @@ const userService = {
       if (newUser === null) {
         return { error: { code: 500, data: newUser } };
       } else {
+
+        sendMail(newUser.email, "Welcome to APY Disney")
+        // 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
+
+
         return { data: newUser };
       }
     } catch (err) {
@@ -93,37 +87,6 @@ const userService = {
     }
   },
 
-  editUser: async (dataEditUser) => {
-    try {
-      let UserEdit = await db.User.update(dataEditUser.data, {
-        where: { idUser: dataEditUser.id },
-      });
-
-      if (UserEdit === null) {
-        return { error: { code: 500, data: UserEdit } };
-      } else {
-        return { "Affected rows": UserEdit };
-      }
-    } catch (err) {
-      return { error: { code: 500, data: err.toString() } };
-    }
-  },
-
-  deleteUser: async (id) => {
-    try {
-      let deleteUser = await db.User.destroy({
-        where: { idUser: id },
-      });
-
-      if (deleteUser === null) {
-        return { error: { code: 500, data: deleteUser } };
-      } else {
-        return { "Affected rows": deleteUser };
-      }
-    } catch (err) {
-      return { error: { code: 500, data: err.toString() } };
-    }
-  },
-};
+}
 
 module.exports = userService;

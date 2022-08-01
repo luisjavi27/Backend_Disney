@@ -1,19 +1,10 @@
 const userService = require("../services/userService");
 
 const userController = {
-  getAllGenres: async (req, res) => {
-    let allGenres = await GenreService.getAllGenres();
-    if (allGenres.error) {
-      res.status(500);
-      res.send(allGenres);
-    } else {
-      res.status(200);
-      res.send(allGenres);
-    }
-  },
+
 
   getOneUser: async (req, res) => {
-    let user = await userService.getOneUser(req.query);
+    let user = await userService.getOneUser(req.params.email);
 
     if (user.error) {
       res.status(user.error.code);
