@@ -35,8 +35,8 @@ const userService = {
   createUser: async (dataNewUser) => {
     try {
       let newUser = await db.User.create({
-        userName: dataNewUser.user,
-        email: dataNewUser.email,
+        userName: dataNewUser.user.trim(),
+        email: dataNewUser.email.trim(),
         password: bcryptjs.hashSync(dataNewUser.password, 10),
       });
 
