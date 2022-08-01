@@ -1,7 +1,7 @@
 const db = require("../database/models");
 const sequelize = require("sequelize");
 const bcryptjs = require("bcryptjs");
-const { sendMail } = require('../email/account')
+const sendMail = require('../email/account')
 
 const jwt = require('jsonwebtoken');
 
@@ -44,9 +44,7 @@ const userService = {
         return { error: { code: 500, data: newUser } };
       } else {
 
-        sendMail(newUser.email, "Welcome to APY Disney")
-        // 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
-
+        sendMail(newUser.email, newUser.userName)
 
         return { data: newUser };
       }
