@@ -25,7 +25,7 @@ const characterService = {
           where: searchData,
         });
       }
-
+      console.log(allCharacters)
       return { data: allCharacters.rows, count: allCharacters.count };
     } catch (err) {
       return { error: { code: 500, data: err.toString() } };

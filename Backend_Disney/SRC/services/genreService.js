@@ -1,7 +1,7 @@
 const db = require("../database/models");
 const sequelize = require("sequelize");
 
-const GenreService = {
+const genreService = {
   getAllGenres: async () => {
     try {
       let allGenres = await db.Genre.findAndCountAll({
@@ -90,4 +90,4 @@ const GenreService = {
   searchGenres: () => {},
 };
 
-module.exports = GenreService;
+module.exports = genreService;

@@ -27,7 +27,13 @@ console.log("aqui noS")
   createCharacter: async (req, res) => {
 
     let {in_movies, ...dataNewCharacter} = req.body;
-    in_movies = in_movies.split(",")
+
+    if(in_movies === undefined){
+      res.status(400);
+      return res.send({ data: "Assign at least one movie" });
+      
+    }
+    in_movies = in_movies.split(",");
 
     dataNewCharacter.in_movies=[];
     in_movies.forEach((movie)=>{

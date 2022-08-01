@@ -1,16 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require('dotenv').config()
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+// const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const app = express();
 
-var characterRoutes = require('./routes/characterRoutes');
-var userRoutes = require('./routes/userRoutes');
-var movieRoutes = require('./routes/movieRoutes');
-var genreRoutes = require('./routes/genreRoutes');
+  
+const characterRoutes = require('./routes/characterRoutes');
+const userRoutes = require('./routes/userRoutes');
+const movieRoutes = require('./routes/movieRoutes');
+const genreRoutes = require('./routes/genreRoutes');
 
-
-var app = express();
 
 // not engine setup, only backend
 app.set('views', path.join(__dirname, 'views'));
@@ -19,8 +20,9 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 
@@ -32,10 +34,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   next();
 // });
 
+
 app.use('/api/genres/', genreRoutes);
 app.use('/api/characters/', characterRoutes);
 app.use('/api/movies/', movieRoutes);
-app.use('/api/', userRoutes); 
+app.use('/api/auth', userRoutes); 
 
 
 // catch 404 and forward to error handler

@@ -1,6 +1,6 @@
-const genreService = require("../services/genreService");
+const userService = require("../services/userService");
 
-const genreController = {
+const userController = {
   getAllGenres: async (req, res) => {
     let allGenres = await GenreService.getAllGenres();
     if (allGenres.error) {
@@ -12,28 +12,41 @@ const genreController = {
     }
   },
 
-  getOneGenre: async (req, res) => {
-    let genre = await genreService.getOneGenre(req.params.id);
+  getOneUser: async (req, res) => {
+    let user = await userService.getOneUser(req.query);
 
-    if (genre.error) {
-      res.status(genre.error.code);
-      res.send({ response: genre.error.data });
+    if (user.error) {
+      res.status(user.error.code);
+      res.send({ response: user.error.data });
     } else {
       res.status(200);
-      res.send(genre);
+      res.send(user);
     }
   },
 
-  createGenre: async (req, res) => {
+  createUser: async (req, res) => {
 
-    let newGenre = await genreService.createGenre(req.body);
+    let newUser = await userService.createUser(req.body);
 
-    if (newGenre.error) {
-      res.status(newGenre.error.code);
-      res.send({ response: newGenre.error.data });
+    if (newUser.error) {
+      res.status(newUser.error.code);
+      res.send({ response: newUser.error.data });
     } else {
       res.status(201);
-      res.send(newGenre);
+      res.send(newUser);
+    }
+  },
+
+  loginUser: async (req, res) => {
+    console.log(req.body)
+    let user = await userService.loginUser(req.body);
+
+    if (user.error) {
+      res.status(user.error.code);
+      res.send({ response: user.error.data });
+    } else {
+      res.status(200);
+      res.send(user);
     }
   },
 
@@ -72,4 +85,4 @@ const genreController = {
   },
 };
 
-module.exports = genreController;
+module.exports = userController;

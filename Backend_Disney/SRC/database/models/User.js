@@ -16,12 +16,12 @@ module.exports = (sequelize, dataTypes) => {
       unique: true,
     },
     password: {
-      type: dataTypes.DATE,
+      type: dataTypes.STRING(100),
     },
   };
   let config = {
     timestamps: true,
-    createdAt: "createdAt",
+    createdAt: "createAt",
     updatedAt: "updatedAt",
     deletedAt: false,
   };

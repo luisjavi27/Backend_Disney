@@ -26,13 +26,14 @@ const movieController = {
 
   createMovie: async (req, res) => {
 
-    let {of_movie, ...dataNewMovie} = req.body;
-    of_movie = of_movie.split(",")
+    let {...dataNewMovie} = req.body;
+    // let {of_movie, ...dataNewMovie} = req.body;
+    // of_movie = of_movie.split(",")
 
-    dataNewMovie.of_movie=[];
-    of_movie.forEach((movie)=>{
-      dataNewMovie.of_movie.push({idMovieFK:movie})
-    });
+    // dataNewMovie.of_movie=[];
+    // of_movie.forEach((movie)=>{
+    //   dataNewMovie.of_movie.push({idMovieFK:movie})
+    // });
 
     let newMovie = await movieService.createMovie(dataNewMovie);
 

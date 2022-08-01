@@ -1,15 +1,12 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const userController = require("../controllers/userController")
+let authMiddleware = require('../middlewares/authMiddleware.js')
 
-/* GET home page. */
-router.get('/auth', function(req, res) {
-  res.send("Users all");
-});
-router.get('/auth/login', function(req, res) {
-  res.send("User login");
-});
-router.get('/auth/register', function(req, res) {
-  res.send("User register");
-});
+router.get('/', authMiddleware, userController.getOneUser);
+
+router.get('/login', userController.loginUser);
+
+router.post('/register', userController.createUser);
 
 module.exports = router;

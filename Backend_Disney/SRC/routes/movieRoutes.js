@@ -1,17 +1,18 @@
 let express = require('express');
 let router = express.Router();
+let authMiddleware = require('../middlewares/authMiddleware.js')
 
 const movieController = require("../controllers/movieController")
 
-router.get('/', movieController.getAllMovies);
+router.get('/', authMiddleware, movieController.getAllMovies);
 
-router.get('/:id', movieController.getOneMovie);
+router.get('/:id', authMiddleware, movieController.getOneMovie);
 
-router.post('/create', movieController.createMovie);
+router.post('/create', authMiddleware,movieController.createMovie);
 
-router.put('/edit/:id', movieController.editMovie);
+router.put('/edit/:id', authMiddleware, movieController.editMovie);
 
-router.delete('/delete/:id', movieController.deleteMovie);
+router.delete('/delete/:id', authMiddleware, movieController.deleteMovie);
 
 // router.get('/movies', movieController.searchMovies);
 
